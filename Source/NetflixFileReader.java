@@ -64,8 +64,6 @@ public class NetflixFileReader
 						}	
 					}
 					
-					//System.out.println(line.charAt(i));
-					
 					if(line.charAt(i) != ',')
 					{
 						if(line.charAt(line.length() - 1) == 'm' || line.charAt(line.length() - 1) == 'r')

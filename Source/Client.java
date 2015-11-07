@@ -18,34 +18,81 @@ public class Client
 		}	
 		
 		List<Media> mediaList = netflix.movieList();
-				
-		Scanner scanner = new Scanner(System.in);
+		List<Media> temp = mediaList;
 		
-		System.out.println("Enter a filter, or -1 to show filtered list.");
+		Scanner scanner = new Scanner(System.in);		
+		String field;
+		String target;
+		char relation;
 		
-		String field = "";
-		char relation = ' ';
-		String target = "";
+		boolean doContinue = false;
 		
+		String command = "";
+		
+		// Do loop start.
+		int counter = 0;
 		do
 		{
-			System.out.print("Field: ");
-			field = scanner.next();
+			System.out.print("Add or remove a filter ('add, 'remove): ");
 			
-			System.out.print("Relation: ");
-			relation = scanner.next().trim().charAt(0);
+			command = scanner.next().toLowerCase();
 			
-			System.out.print("Target: ");
-			target = scanner.next();
+			if(command.contains("add"))
+			{
+				System.out.print("Field: ");
+				field = scanner.next().trim();
+
+				System.out.print("Relation: ");
+				relation = scanner.next().trim().charAt(0);
+				scanner.nextLine();	
 			
-			System.out.println();
+				System.out.print("Target: ");
+				target = scanner.nextLine();
+									
+				filters.add(new Filter(field, relation, target));
+				
+				System.out.print("Continue? (Enter 'true' or 'false': ");
+				doContinue = Boolean.parseBoolean(scanner.next().trim().toLowerCase());
 			
-			filters.add(new Filter(field, relation, target));
-		} while(relation != '1');
+				System.out.println();
+				
+				if(counter >= 1)
+				{
+					temp = filters.get(counter - 1).filteredMedia(temp);
+				}
+				
+				mediaList = filters.get(counter++).filteredMedia(mediaList);
+				
+				for(int i = 0; i < mediaList.size(); i++)
+				{
+					System.out.println(mediaList.get(i));
+				}
+			}
+			else if(command.contains("remove"))
+			{
+				filters.remove(filters.size() - 1);
+				mediaList = temp;
+				
+				System.out.print("Continue? (Enter 'true' or 'false': ");
+				doContinue = Boolean.parseBoolean(scanner.next().trim().toLowerCase());
+				
+				System.out.println();
+				
+				for(int i = 0; i < mediaList.size(); i++)
+				{
+					System.out.println(mediaList.get(i));
+				}
+			}
+			else
+			{
+				System.err.println("Unknown command.");
+				// Go back to start.
+				doContinue = true;
+			}
+			
+		} while(doContinue);
+		// Do loop end.		
 		
-		for(int i = 0; i < mediaList.size(); i++)
-		{
-			System.out.println(mediaList.get(i));
-		}
+		scanner.close();
 	}
 }

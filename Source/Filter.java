@@ -8,22 +8,22 @@ public class Filter
 	
 	public Filter(String field, char relation, String target)
 	{
-		this.field = field;
+		this.field = field.toLowerCase();
 		this.relation = relation;
 		this.target = target;
 		
 	}
 	
-	public List<Media> filteredMedia(List<Media> mediaList, List<Filter> filter)
+	public List<Media> filteredMedia(List<Media> mediaList)
 	{	
 		List<Media> filteredMedia = new LinkedList<Media>();
 		
 		switch(relation)
 		{
 			case '=':
-				if(field == "genre")
+				if(field.contains("genre"))
 				{
-					if(target == "movie")
+					if(target.contains("movie"))
 					{
 						for(int i = 0; i < mediaList.size(); i++)
 						{
@@ -33,7 +33,7 @@ public class Filter
 							}
 						}
 					}
-					else if(target == "series")
+					else if(target.contains("series"))
 					{
 						for(int i = 0; i < mediaList.size(); i++)
 						{
@@ -44,28 +44,64 @@ public class Filter
 						}
 					}
 				}
-				else if(field == "title")
+				else if(field.contains("title"))
 				{
 					for(int i = 0; i < mediaList.size(); i++)
 					{
-						if(target == mediaList.get(i).title)
+						if(mediaList.get(i).title.contains(target))
 						{
 							filteredMedia.add(mediaList.get(i));
 						}
 					}
 				}
-				else
-				{
-					return mediaList;
-				}
 				break;
 			case '<':
-				
+				if(field.contains("year"))
+				{
+					for(int i = 0; i < mediaList.size(); i++)
+					{
+						if(mediaList.get(i).year < Integer.parseInt(target))
+						{
+							filteredMedia.add(mediaList.get(i));
+						}
+					}
+				}
+				else if(field.contains("rating"))
+				{
+					for(int i = 0; i < mediaList.size(); i++)
+					{
+						if(mediaList.get(i).rating < Float.parseFloat(target))
+						{
+							filteredMedia.add(mediaList.get(i));
+						}
+					}
+				}
 				break;
 			case '>':
+				if(field.contains("year"))
+				{
+					for(int i = 0; i < mediaList.size(); i++)
+					{
+						if(mediaList.get(i).year > Integer.parseInt(target))
+						{
+							filteredMedia.add(mediaList.get(i));
+						}
+					}
+				}
+				else if(field.contains("rating"))
+				{
+					for(int i = 0; i < mediaList.size(); i++)
+					{
+						if( mediaList.get(i).rating > Float.parseFloat(target))
+						{
+							filteredMedia.add(mediaList.get(i));
+						}
+					}
+				}
 				break;
 			default:
-				return mediaList;
+				System.err.println("Incorrect input.");
+				break;
 		}
 		
 		return filteredMedia;
