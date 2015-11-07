@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
 
+// Line 4484 : Jessie () |   ,
+
 public class NetflixFileReader 
 {
 	Scanner scanner;
@@ -13,33 +15,123 @@ public class NetflixFileReader
 	public List<Media> movieList()
 	{
 		List<Media> mediaList = new LinkedList<Media>();
-		
+				
 		while(scanner.hasNextLine())
 		{
 			String line = scanner.nextLine();
 			
 			// Basic Parameter of each Media object.
-			String title = line.substring(0, line.indexOf("(")).trim();;		
+			String title = "";
 			int year = 0;
-			float rating = 0.0f;
+			float rating = 0.0f;	
 			
-			if(year > 10)
+			int i = 0;
+			while(i < line.length())
 			{
-				// Parse the length of the movie then add.
-				String length = "";
+				if((line.charAt(i) == '(') && ((line.charAt(i + 1) == '1') || (line.charAt(i + 1) == '2')))
+				{
+					// Get title and year.
+					title = line.substring(0, i).trim();
+					year = Integer.parseInt(line.substring(i + 1, i + 5).trim());
+						
+					if(line.charAt(i + 5) == '-')
+					{
+						i += 5;
+					}	
+					if(line.charAt(i + 7) == '(')
+					{
+						i += 7;
+					}
+					
+					i +=  11;
+					
+					// Move to first rating.
+					if(line.charAt(i) != ',' && line.charAt(i + 1) != '|')
+					{					
+						if(line.charAt(i + 2) != 's')
+						{
+							rating = Float.parseFloat(line.substring(i, i + 3).trim());	
+							
+							if((i + 11) < line.length())
+								i += 11;
+						}
+						else
+						{
+							rating = Float.parseFloat(line.substring(i, i + 1));
+							
+							if((i + 9) < line.length())
+								i += 9;
+						}	
+					}
+					
+					//System.out.println(line.charAt(i));
+					
+					if(line.charAt(i) != ',')
+					{
+						if(line.charAt(line.length() - 1) == 'm' || line.charAt(line.length() - 1) == 'r')
+						{
+							String length = "";
+							
+							for(int j = i; j < line.length(); j++)
+							{
+								length += line.charAt(j);
+							}
+							
+							// Add a movie to a list.
+							mediaList.add(new Movie(title, year, rating, length));
+						}
+						else
+						{
+							String length = "";			
+							
+							for(int j = i; j < line.length(); j++)
+							{
+								length += line.charAt(j);
+							}
+							
+							// Add a series to a list.
+							mediaList.add(new Series(title, year, rating, length));
+						}
+					}
+					else if(line.charAt(i) == ',' && i < line.length())
+					{
+						if(line.charAt(line.length() - 1) == 'm' || line.charAt(line.length() - 1) == 'r')
+						{
+							String length = "";
+							
+							for(int j = i + 2; j < line.length(); j++)
+							{
+								length += line.charAt(j);
+							}
+							
+							// Add a movie to a list.
+							mediaList.add(new Movie(title, year, rating, length));
+						}
+						else
+						{
+							String length = "";			
+							
+							for(int j = i; j < line.length(); j++)
+							{
+								length += line.charAt(j);
+							}
+							
+							// Add a series to a list.
+							mediaList.add(new Series(title, year, rating, length));
+						}
+					}
+					else
+					{
+						mediaList.add(new Movie(title, year, rating, "???"));
+					}
+				}
+				else
+				{
+					i++;
+				}
 				
-				// Add a movie to a list.
-				mediaList.add(new Movie(title, year, rating, length));
 			}
-			else
-			{
-				// Parse the number of seasons then add.
-				int season = 0;
-				
-				// Add a series to a list.
-				mediaList.add(new Series(title, year, rating, season));
-			}
-		}
+		}		
 		
 		return mediaList;
 	}

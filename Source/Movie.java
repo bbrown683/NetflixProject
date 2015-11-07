@@ -11,7 +11,7 @@ public class Movie extends Media
 	
 	public String toString()
 	{
-		return "\nMovie Title: " + super.getTitle() + "\nRelease Date: " + getYear() +
-		"Average Rating: " + getRating() + "Length: " + length; 
+		return "Movie Title: " + super.getTitle() + "\nRelease Date: " + getYear() +
+		"\nAverage Rating: " + getRating() + "\nLength: " + length + "\n"; 
 	}
 }

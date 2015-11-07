@@ -1,18 +1,17 @@
 public class Series extends Media
 {
-	int season;
+	String length;
 	
-	public Series(String title, int year, float rating, int season)
+	public Series(String title, int year, float rating, String length)
 	{
 		super(title, year, rating);
 		
-		this.season = season;
+		this.length = length;
 	}	
 	
 	public String toString()
 	{
 		return "Series Title: " + super.getTitle() + "\nFirst Aired: " + getYear() +
-				"\nAverage Rating: " + getRating() + "\nNumber of Seasons: " + season; 
-	}
-	
+				"\nAverage Rating: " + getRating() + "\nLength: " + length + "\n"; 
+	}	
 }

@@ -40,4 +40,10 @@ public abstract class Media
 	{
 		return rating;
 	}
+	
+	public String toString()
+	{
+		return "Movie Title: " + title + "\nRelease Date: " + year +
+				"\nAverage Rating: " + rating + "\n"; 
+	}
 }
