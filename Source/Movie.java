@@ -1,3 +1,7 @@
+// Authors: Benjamin Brown and Jake Jones
+// Assignment: Project 2
+// Filename: Movie.java
+
 public class Movie extends Media
 {
 	String length;

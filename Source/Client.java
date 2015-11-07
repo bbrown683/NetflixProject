@@ -1,3 +1,7 @@
+// Authors: Benjamin Brown and Jake Jones
+// Assignment: Project 2
+// Filename: Client.java
+
 import java.io.*;
 import java.util.*;
 

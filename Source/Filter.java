@@ -1,3 +1,7 @@
+// Authors: Benjamin Brown and Jake Jones
+// Assignment: Project 2
+// Filename: netflixFileReader.java
+
 import java.util.*;
 
 public class Filter

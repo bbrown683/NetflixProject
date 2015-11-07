@@ -1,3 +1,7 @@
+// Authors: Benjamin Brown and Jake Jones
+// Assignment: Project 2
+// Filename: Media.java
+
 public abstract class Media 
 {
 	String title;

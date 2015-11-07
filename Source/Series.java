@@ -1,3 +1,7 @@
+// Authors: Benjamin Brown and Jake Jones
+// Assignment: Project 2
+// Filename: Series.java
+
 public class Series extends Media
 {
 	String length;

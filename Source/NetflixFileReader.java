@@ -1,7 +1,9 @@
+// Authors: Benjamin Brown and Jake Jones
+// Assignment: Project 2
+// Filename: netflixFileReader.java
+
 import java.io.*;
 import java.util.*;
-
-// Line 4484 : Jessie () |   ,
 
 public class NetflixFileReader 
 {
@@ -36,13 +38,16 @@ public class NetflixFileReader
 						
 					if(line.charAt(i + 5) == '-')
 					{
+						// Move through the line.
 						i += 5;
 					}	
 					if(line.charAt(i + 7) == '(')
 					{
+						// Move through the line.
 						i += 7;
 					}
 					
+					// Move through the line.
 					i +=  11;
 					
 					// Move to first rating.
@@ -53,6 +58,7 @@ public class NetflixFileReader
 							rating = Float.parseFloat(line.substring(i, i + 3).trim());	
 							
 							if((i + 11) < line.length())
+								// Move through the line.
 								i += 11;
 						}
 						else
@@ -60,10 +66,12 @@ public class NetflixFileReader
 							rating = Float.parseFloat(line.substring(i, i + 1));
 							
 							if((i + 9) < line.length())
+								// Move through the line.
 								i += 9;
 						}	
 					}
 					
+					// Movie and Series code.
 					if(line.charAt(i) != ',')
 					{
 						if(line.charAt(line.length() - 1) == 'm' || line.charAt(line.length() - 1) == 'r')
@@ -109,9 +117,15 @@ public class NetflixFileReader
 						{
 							String length = "";			
 							
-							for(int j = i; j < line.length(); j++)
+							for(int j = i + 2; j < line.length(); j++)
 							{
 								length += line.charAt(j);
+							}
+							
+							if(length.isEmpty())
+							{
+								// Length is unknown 
+								length = "???";
 							}
 							
 							// Add a series to a list.
